@@ -1,0 +1,30 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://mi.sistema.com/common/types"
+           xmlns="http://mi.sistema.com/common/types"
+           elementFormDefault="qualified">
+
+  <xs:element name="listAllRequest" type="xs:anyType"/>
+
+  <xs:element name="listAllResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="interface" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="type" type="xs:string"/>
+              <xs:element name="operation" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="description" type="xs:string"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

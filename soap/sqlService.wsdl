@@ -1,0 +1,43 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://mi.sistema.com/sql"
+             xmlns:types="http://mi.sistema.com/sql/types"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://mi.sistema.com/sql">
+
+  <types>
+    <xs:schema targetNamespace="http://mi.sistema.com/sql/types">
+      <xs:import namespace="http://mi.sistema.com/sql/types" schemaLocation="sqlTypes.xsd"/>
+    </xs:schema>
+  </types>
+
+  <message name="createDatabaseRequest">
+    <part name="parameters" element="types:createDatabaseRequest"/>
+  </message>
+
+  <message name="createDatabaseResponse">
+    <part name="parameters" element="types:createDatabaseResponse"/>
+  </message>
+
+  <portType name="SQLServicePortType">
+    <operation name="createDatabase">
+      <input message="tns:createDatabaseRequest"/>
+      <output message="tns:createDatabaseResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="SQLServiceBinding" type="tns:SQLServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="createDatabase">
+      <soap:operation soapAction="createDatabase"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+  </binding>
+
+  <service name="SQLService">
+    <port name="SQLServicePort" binding="tns:SQLServiceBinding">
+      <soap:address location="http://localhost:8081/sqlService"/>
+    </port>
+  </service>
+</definitions>

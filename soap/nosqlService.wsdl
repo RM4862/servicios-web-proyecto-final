@@ -1,0 +1,43 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://mi.sistema.com/nosql"
+             xmlns:types="http://mi.sistema.com/nosql/types"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://mi.sistema.com/nosql">
+
+  <types>
+    <xs:schema targetNamespace="http://mi.sistema.com/nosql/types">
+      <xs:import namespace="http://mi.sistema.com/nosql/types" schemaLocation="nosqlTypes.xsd"/>
+    </xs:schema>
+  </types>
+
+  <message name="insertDocumentRequest">
+    <part name="parameters" element="types:insertDocumentRequest"/>
+  </message>
+
+  <message name="insertDocumentResponse">
+    <part name="parameters" element="types:insertDocumentResponse"/>
+  </message>
+
+  <portType name="NoSQLServicePortType">
+    <operation name="insertDocument">
+      <input message="tns:insertDocumentRequest"/>
+      <output message="tns:insertDocumentResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="NoSQLServiceBinding" type="tns:NoSQLServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="insertDocument">
+      <soap:operation soapAction="insertDocument"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+  </binding>
+
+  <service name="NoSQLService">
+    <port name="NoSQLServicePort" binding="tns:NoSQLServiceBinding">
+      <soap:address location="http://localhost:8082/nosqlService"/>
+    </port>
+  </service>
+</definitions>

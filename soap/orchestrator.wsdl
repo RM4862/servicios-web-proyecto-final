@@ -1,0 +1,44 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:tns="http://mi.sistema.com/orchestrator"
+             xmlns:types="http://mi.sistema.com/common/types"
+             targetNamespace="http://mi.sistema.com/orchestrator">
+
+  <types>
+    <xs:schema targetNamespace="http://mi.sistema.com/common/types"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://mi.sistema.com/common/types" schemaLocation="commonTypes.xsd"/>
+    </xs:schema>
+  </types>
+
+  <message name="listAllRequest">
+    <part name="parameters" element="types:listAllRequest"/>
+  </message>
+
+  <message name="listAllResponse">
+    <part name="parameters" element="types:listAllResponse"/>
+  </message>
+
+  <portType name="OrchestratorPortType">
+    <operation name="listAll">
+      <input message="tns:listAllRequest"/>
+      <output message="tns:listAllResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="OrchestratorBinding" type="tns:OrchestratorPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="listAll">
+      <soap:operation soapAction="listAll"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+  </binding>
+
+  <service name="OrchestratorService">
+    <port name="OrchestratorPort" binding="tns:OrchestratorBinding">
+      <soap:address location="http://localhost:8080/orchestrator"/>
+    </port>
+  </service>
+</definitions>
