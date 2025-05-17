@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Proyecto SOA: Plataforma asincrónica con SOAP, RabbitMQ, SQL/NoSQL y OAuth
 
 Este proyecto implementa una arquitectura SOA asincrónica basada en mensajes (RabbitMQ), con autenticación mediante OAuth (Google) y backends intercambiables en MySQL y Firebase. La comunicación se realiza con mensajes SOAP, enviados desde Postman o una app externa.
