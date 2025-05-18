@@ -5,7 +5,7 @@ import jwt
 import urllib.request
 import urllib.error
 
-FIREBASE_CREDENTIALS_PATH = "C:/Users/avfmo/Documents/Servicios_web_proyecto/proyectos-servicios-web-f-firebase-adminsdk-fbsvc-fb8b184b4c.json"
+FIREBASE_CREDENTIALS_PATH = "C:/Users/avfmo/Documents/Servicios_web_proyecto/proyectos-servicios-web-f-firebase-adminsdk-fbsvc-d7cf017db5.json"
 FIREBASE_PROJECT_ID = "proyectos-servicios-web-f"
 FIREBASE_DB = f"https://firestore.googleapis.com/v1/projects/{FIREBASE_PROJECT_ID}/databases/(default)/documents"
 

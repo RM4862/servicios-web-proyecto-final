@@ -1,3 +1,4 @@
 pika
 mysql-connector-python
 PyJWT
+cryptography

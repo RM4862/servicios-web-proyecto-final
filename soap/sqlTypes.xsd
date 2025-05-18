@@ -5,16 +5,29 @@
 
   <xs:element name="createDatabaseRequest">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element name="name" type="xs:string"/>
-      </xs:sequence>
+      <xs:sequence><xs:element name="name" type="xs:string"/></xs:sequence>
     </xs:complexType>
   </xs:element>
 
   <xs:element name="createDatabaseResponse">
     <xs:complexType>
+      <xs:sequence><xs:element name="message" type="xs:string"/></xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="insertRecordRequest">
+    <xs:complexType>
       <xs:sequence>
-        <xs:element name="message" type="xs:string"/>
+        <xs:element name="dbName" type="xs:string"/>
+        <xs:element name="tableName" type="xs:string"/>
+        <xs:element name="field" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name" type="xs:string"/>
+              <xs:element name="value" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:sequence>
     </xs:complexType>
   </xs:element>

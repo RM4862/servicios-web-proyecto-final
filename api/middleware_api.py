@@ -6,6 +6,7 @@ import json
 import ssl
 from api.parser_xml import parse_generic_request
 from api.adapters import mysql_adapter, firebase_adapter
+from api.auth_roles import get_user_role, is_authorized
 
 RABBIT_HOST = 'localhost'
 QUEUE_IN = 'api.request'
@@ -20,58 +21,87 @@ def validar_token_google(token):
         context = ssl._create_unverified_context()
         with urllib.request.urlopen(url, context=context) as response:
             data = json.loads(response.read())
-            print("Token válido de:", data.get("email"))
-            return True
-    except:
-        return False
-
-def enviar_soap(xml):
-    headers = {'Content-Type': 'text/xml', 'Content-Length': str(len(xml))}
-    conn = http.client.HTTPConnection(SOAP_HOST, SOAP_PORT)
-    conn.request("POST", SOAP_PATH, body=xml.encode(), headers=headers)
-    resp = conn.getresponse()
-    resultado = resp.read().decode()
-    conn.close()
-    return resultado
+            print("Token válido. Usuario:", data.get("email"))
+            return data
+    except Exception as e:
+        print("Token inválido:", str(e))
+        return None
 
 def callback(ch, method, props, body):
     token = props.headers.get('Authorization', '').replace('Bearer ', '')
-    if not validar_token_google(token):
-        print("Token inválido")
+    user_info = validar_token_google(token)
+    if not user_info:
         return
 
+    email = user_info.get("email")
     xml = body.decode()
     parsed = parse_generic_request(xml)
+
     if not parsed:
-        print("XML inválido")
         return
 
     interface = parsed["interface"]
     operation = parsed["operation"]
     params = parsed["parameters"]
+    rol = get_user_role(email)
+
+    if not is_authorized(rol, operation):
+        print(f"Usuario '{email}' (rol: {rol}) no tiene permiso para '{operation}'")
+        return
+
+    resultado = ""
 
     if interface == "SQL":
         if operation == "createDatabase":
             resultado = mysql_adapter.create_database(params["name"])
+        elif operation == "listDatabases":
+            resultado = json.dumps(mysql_adapter.list_databases())
+        elif operation == "dropDatabase":
+            resultado = mysql_adapter.drop_database(params["name"])
+        elif operation == "createTable":
+            db_name = params["dbName"]
+            table_name = params["tableName"]
+            columns = []
+            i = 1
+            while f"col{i}_name" in params and f"col{i}_type" in params:
+                columns.append({
+                    "name": params[f"col{i}_name"],
+                    "type": params[f"col{i}_type"]
+                })
+                i += 1
+            resultado = mysql_adapter.create_table(db_name, table_name, columns)
+        elif operation == "listTables":
+            resultado = json.dumps(mysql_adapter.list_tables(params["dbName"]))
+        elif operation == "dropTable":
+            resultado = mysql_adapter.drop_table(params["dbName"], params["tableName"])
         elif operation == "insertRecord":
             resultado = mysql_adapter.insert_record(
-                db_name=params["dbName"],
-                table_name=params["tableName"],
-                values={k: v for k, v in params.items() if k not in ["dbName", "tableName"]}
+                params["dbName"], params["tableName"],
+                {k: v for k, v in params.items() if k not in ["dbName", "tableName"]}
             )
+        elif operation == "updateRecord":
+            values = {k: v for k, v in params.items() if k not in ["dbName", "tableName", "condition"]}
+            resultado = mysql_adapter.update_record(params["dbName"], params["tableName"], values, params["condition"])
+        elif operation == "deleteRecord":
+            resultado = mysql_adapter.delete_record(params["dbName"], params["tableName"], params["condition"])
+        elif operation == "selectRecords":
+            resultado = json.dumps(mysql_adapter.select_records(params["dbName"], params["tableName"]))
+        elif operation == "selectJoin":
+            resultado = json.dumps(mysql_adapter.select_join(params["dbName"], params["query"]))
+        elif operation == "aggregateQuery":
+            resultado = json.dumps(mysql_adapter.aggregate_query(params["dbName"], params["tableName"], params["column"], params["operation"]))
         else:
-            resultado = "Operación SQL no reconocida."
+            resultado = f"Operación SQL desconocida: {operation}"
 
     elif interface == "NoSQL":
         if operation == "insertDocument":
             resultado = firebase_adapter.insert_document(
-                collection=params["collection"],
-                document={k: v for k, v in params.items() if k != "collection"}
+                params["collection"], {k: v for k, v in params.items() if k != "collection"}
             )
         else:
-            resultado = "Operación NoSQL no reconocida."
+            resultado = f"Operación NoSQL desconocida: {operation}"
     else:
-        resultado = "Interface desconocida."
+        resultado = "Interface no válida"
 
     ch.basic_publish(
         exchange='',

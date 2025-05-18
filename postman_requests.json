@@ -1,0 +1,54 @@
+{
+  "info": {
+    "name": "SOA Proyecto - Pruebas SOAP",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Admin - Crear Base de Datos",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{oauth_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:15672/api/exchanges/%2F/amq.default/publish"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"properties\": {\n    \"reply_to\": \"api.response\",\n    \"correlation_id\": \"admin-db-01\",\n    \"headers\": {\n      \"Authorization\": \"Bearer {{oauth_token}}\"\n    }\n  },\n  \"routing_key\": \"api.request\",\n  \"payload\": \"<soapenv:Envelope xmlns:soapenv=\\\"http://schemas.xmlsoap.org/soap/envelope/\\\" xmlns:db=\\\"http://example.com/dbService\\\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>createDatabase</operation><parameters><name>prueba_admin</name></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>\",\n  \"payload_encoding\": \"string\"\n}"
+        }
+      }
+    },
+    {
+      "name": "User - Insertar Registro",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{oauth_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:15672/api/exchanges/%2F/amq.default/publish"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"properties\": {\n    \"reply_to\": \"api.response\",\n    \"correlation_id\": \"user-insert-01\",\n    \"headers\": {\n      \"Authorization\": \"Bearer {{oauth_token}}\"\n    }\n  },\n  \"routing_key\": \"api.request\",\n  \"payload\": \"<soapenv:Envelope xmlns:soapenv=\\\"http://schemas.xmlsoap.org/soap/envelope/\\\" xmlns:db=\\\"http://example.com/dbService\\\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>insertRecord</operation><parameters><dbName>prueba_admin</dbName><tableName>personas</tableName><nombre>Juan</nombre><edad>30</edad></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>\",\n  \"payload_encoding\": \"string\"\n}"
+        }
+      }
+    }
+  ]
+}
