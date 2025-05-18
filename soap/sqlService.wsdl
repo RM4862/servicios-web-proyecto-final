@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
              xmlns:tns="http://mi.sistema.com/sql"
@@ -6,26 +7,85 @@
              targetNamespace="http://mi.sistema.com/sql">
 
   <types>
-    <xs:schema targetNamespace="http://mi.sistema.com/sql/types">
+    <xs:schema targetNamespace="http://mi.sistema.com/sql/types"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               elementFormDefault="qualified">
       <xs:import namespace="http://mi.sistema.com/sql/types" schemaLocation="sqlTypes.xsd"/>
     </xs:schema>
   </types>
 
+  <!-- Mensajes -->
   <message name="createDatabaseRequest">
     <part name="parameters" element="types:createDatabaseRequest"/>
   </message>
-
   <message name="createDatabaseResponse">
-    <part name="parameters" element="types:createDatabaseResponse"/>
+    <part name="parameters" element="xs:string"/>
   </message>
 
+  <message name="createTableRequest">
+    <part name="parameters" element="types:createTableRequest"/>
+  </message>
+  <message name="createTableResponse">
+    <part name="parameters" element="xs:string"/>
+  </message>
+
+  <message name="insertRecordRequest">
+    <part name="parameters" element="types:insertRecordRequest"/>
+  </message>
+  <message name="insertRecordResponse">
+    <part name="parameters" element="xs:string"/>
+  </message>
+
+  <message name="aggregateQueryRequest">
+    <part name="parameters" element="types:aggregateQueryRequest"/>
+  </message>
+  <message name="aggregateQueryResponse">
+    <part name="parameters" element="xs:string"/>
+  </message>
+
+  <message name="selectJoinRequest">
+    <part name="parameters" element="types:selectJoinRequest"/>
+  </message>
+  <message name="selectJoinResponse">
+    <part name="parameters" element="xs:string"/>
+  </message>
+
+  <message name="selectDistinctRequest">
+    <part name="parameters" element="types:selectDistinctRequest"/>
+  </message>
+  <message name="selectDistinctResponse">
+    <part name="parameters" element="xs:string"/>
+  </message>
+
+  <!-- PortType -->
   <portType name="SQLServicePortType">
     <operation name="createDatabase">
       <input message="tns:createDatabaseRequest"/>
       <output message="tns:createDatabaseResponse"/>
     </operation>
+    <operation name="createTable">
+      <input message="tns:createTableRequest"/>
+      <output message="tns:createTableResponse"/>
+    </operation>
+    <operation name="insertRecord">
+      <input message="tns:insertRecordRequest"/>
+      <output message="tns:insertRecordResponse"/>
+    </operation>
+    <operation name="aggregateQuery">
+      <input message="tns:aggregateQueryRequest"/>
+      <output message="tns:aggregateQueryResponse"/>
+    </operation>
+    <operation name="selectJoin">
+      <input message="tns:selectJoinRequest"/>
+      <output message="tns:selectJoinResponse"/>
+    </operation>
+    <operation name="selectDistinct">
+      <input message="tns:selectDistinctRequest"/>
+      <output message="tns:selectDistinctResponse"/>
+    </operation>
   </portType>
 
+  <!-- Binding -->
   <binding name="SQLServiceBinding" type="tns:SQLServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <operation name="createDatabase">
@@ -33,8 +93,34 @@
       <input><soap:body use="literal"/></input>
       <output><soap:body use="literal"/></output>
     </operation>
+    <operation name="createTable">
+      <soap:operation soapAction="createTable"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="insertRecord">
+      <soap:operation soapAction="insertRecord"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="aggregateQuery">
+      <soap:operation soapAction="aggregateQuery"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="selectJoin">
+      <soap:operation soapAction="selectJoin"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="selectDistinct">
+      <soap:operation soapAction="selectDistinct"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
   </binding>
 
+  <!-- Servicio -->
   <service name="SQLService">
     <port name="SQLServicePort" binding="tns:SQLServiceBinding">
       <soap:address location="http://localhost:8081/sqlService"/>

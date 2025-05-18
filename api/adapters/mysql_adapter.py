@@ -1,4 +1,3 @@
-# mysql_adapter.py (placeholder)
 import mysql.connector
 import decimal
 
@@ -28,7 +27,7 @@ def drop_database(db_name):
     cursor = conn.cursor()
     cursor.execute(f"DROP DATABASE IF EXISTS {db_name}")
     conn.close()
-    return f"🗑 Base de datos '{db_name}' eliminada."
+    return f"Base de datos '{db_name}' eliminada."
 
 def create_table(db_name, table_name, columns):
     conn = mysql.connector.connect(database=db_name, **MYSQL_CONFIG)
@@ -107,7 +106,14 @@ def aggregate_query(db_name, table, column, operation):
     cursor.execute(query)
     result = cursor.fetchone()[0]
     conn.close()
-    # Conversión para evitar error de serialización JSON
     if isinstance(result, decimal.Decimal):
         result = float(result)
     return {f"{operation}_{column}": result}
+
+def select_distinct(db_name, table_name, column):
+    conn = mysql.connector.connect(database=db_name, **MYSQL_CONFIG)
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT DISTINCT {column} FROM {table_name}")
+    result = [row[0] for row in cursor.fetchall()]
+    conn.close()
+    return {f"distinct_{column}": result}

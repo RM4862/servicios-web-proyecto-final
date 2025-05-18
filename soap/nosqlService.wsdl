@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
              xmlns:tns="http://mi.sistema.com/nosql"
@@ -6,26 +7,63 @@
              targetNamespace="http://mi.sistema.com/nosql">
 
   <types>
-    <xs:schema targetNamespace="http://mi.sistema.com/nosql/types">
+    <xs:schema targetNamespace="http://mi.sistema.com/nosql/types"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               elementFormDefault="qualified">
       <xs:import namespace="http://mi.sistema.com/nosql/types" schemaLocation="nosqlTypes.xsd"/>
     </xs:schema>
   </types>
 
+  <!-- Mensajes -->
   <message name="insertDocumentRequest">
     <part name="parameters" element="types:insertDocumentRequest"/>
   </message>
-
   <message name="insertDocumentResponse">
-    <part name="parameters" element="types:insertDocumentResponse"/>
+    <part name="parameters" element="xs:string"/>
   </message>
 
+  <message name="sumDocumentRequest">
+    <part name="parameters" element="types:sumDocumentRequest"/>
+  </message>
+  <message name="sumDocumentResponse">
+    <part name="parameters" element="xs:string"/>
+  </message>
+
+  <message name="avgDocumentRequest">
+    <part name="parameters" element="types:avgDocumentRequest"/>
+  </message>
+  <message name="avgDocumentResponse">
+    <part name="parameters" element="xs:string"/>
+  </message>
+
+  <message name="distinctDocumentRequest">
+    <part name="parameters" element="types:distinctDocumentRequest"/>
+  </message>
+  <message name="distinctDocumentResponse">
+    <part name="parameters" element="xs:string"/>
+  </message>
+
+  <!-- PortType -->
   <portType name="NoSQLServicePortType">
     <operation name="insertDocument">
       <input message="tns:insertDocumentRequest"/>
       <output message="tns:insertDocumentResponse"/>
     </operation>
+    <operation name="sumDocument">
+      <input message="tns:sumDocumentRequest"/>
+      <output message="tns:sumDocumentResponse"/>
+    </operation>
+    <operation name="avgDocument">
+      <input message="tns:avgDocumentRequest"/>
+      <output message="tns:avgDocumentResponse"/>
+    </operation>
+    <operation name="distinctDocument">
+      <input message="tns:distinctDocumentRequest"/>
+      <output message="tns:distinctDocumentResponse"/>
+    </operation>
   </portType>
 
+  <!-- Binding -->
   <binding name="NoSQLServiceBinding" type="tns:NoSQLServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <operation name="insertDocument">
@@ -33,11 +71,28 @@
       <input><soap:body use="literal"/></input>
       <output><soap:body use="literal"/></output>
     </operation>
+    <operation name="sumDocument">
+      <soap:operation soapAction="sumDocument"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="avgDocument">
+      <soap:operation soapAction="avgDocument"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="distinctDocument">
+      <soap:operation soapAction="distinctDocument"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
   </binding>
 
+  <!-- Servicio -->
   <service name="NoSQLService">
     <port name="NoSQLServicePort" binding="tns:NoSQLServiceBinding">
       <soap:address location="http://localhost:8082/nosqlService"/>
     </port>
   </service>
+
 </definitions>

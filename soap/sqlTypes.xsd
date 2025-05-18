@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="http://mi.sistema.com/sql/types"
            xmlns="http://mi.sistema.com/sql/types"
@@ -5,13 +6,26 @@
 
   <xs:element name="createDatabaseRequest">
     <xs:complexType>
-      <xs:sequence><xs:element name="name" type="xs:string"/></xs:sequence>
+      <xs:sequence>
+        <xs:element name="name" type="xs:string"/>
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="createDatabaseResponse">
+  <xs:element name="createTableRequest">
     <xs:complexType>
-      <xs:sequence><xs:element name="message" type="xs:string"/></xs:sequence>
+      <xs:sequence>
+        <xs:element name="dbName" type="xs:string"/>
+        <xs:element name="tableName" type="xs:string"/>
+        <xs:element name="column" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name" type="xs:string"/>
+              <xs:element name="type" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
 
@@ -28,6 +42,36 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aggregateQueryRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="dbName" type="xs:string"/>
+        <xs:element name="tableName" type="xs:string"/>
+        <xs:element name="column" type="xs:string"/>
+        <xs:element name="operation" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="selectJoinRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="dbName" type="xs:string"/>
+        <xs:element name="query" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="selectDistinctRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="dbName" type="xs:string"/>
+        <xs:element name="tableName" type="xs:string"/>
+        <xs:element name="column" type="xs:string"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>

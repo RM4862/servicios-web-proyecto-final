@@ -32,11 +32,15 @@ def is_authorized(role, operation):
             "createDatabase", "listDatabases", "dropDatabase",
             "createTable", "listTables", "dropTable",
             "insertRecord", "updateRecord", "deleteRecord", "selectRecords",
-            "selectJoin", "aggregateQuery", "insertDocument", "listAll"
+            "selectJoin", "aggregateQuery", "insertDocument", "listAll",
+            "selectDistinct", "sum", "avg", "distinct", "joinCollections",
+            "updateDocument", "deleteDocument"
         ],
         "user": [
             "insertRecord", "updateRecord", "deleteRecord", "selectRecords",
-            "selectJoin", "aggregateQuery", "insertDocument", "listAll"
+            "selectJoin", "aggregateQuery", "insertDocument", "listAll",
+            "selectDistinct", "sum", "avg", "distinct", "joinCollections",
+            "updateDocument", "deleteDocument"
         ],
         "guest": ["listAll"]
     }

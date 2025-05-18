@@ -2,3 +2,6 @@ pika
 mysql-connector-python
 PyJWT
 cryptography
+google-auth
+google-auth-oauthlib
+google-auth-httplib2

@@ -1,4 +1,3 @@
-# middleware_api.py (placeholder)
 import pika
 import http.client
 import urllib.request
@@ -89,7 +88,13 @@ def callback(ch, method, props, body):
         elif operation == "selectJoin":
             resultado = json.dumps(mysql_adapter.select_join(params["dbName"], params["query"]))
         elif operation == "aggregateQuery":
-            resultado = json.dumps(mysql_adapter.aggregate_query(params["dbName"], params["tableName"], params["column"], params["operation"]))
+            resultado = json.dumps(mysql_adapter.aggregate_query(
+                params["dbName"], params["tableName"], params["column"], params["operation"]
+            ))
+        elif operation == "selectDistinct":
+            resultado = json.dumps(mysql_adapter.select_distinct(
+                params["dbName"], params["tableName"], params["column"]
+            ))
         else:
             resultado = f"Operación SQL desconocida: {operation}"
 
@@ -97,6 +102,27 @@ def callback(ch, method, props, body):
         if operation == "insertDocument":
             resultado = firebase_adapter.insert_document(
                 params["collection"], {k: v for k, v in params.items() if k != "collection"}
+            )
+        elif operation == "listAll":
+            resultado = firebase_adapter.list_all(params["collection"])
+        elif operation == "sum":
+            resultado = firebase_adapter.sum_field(params["collection"], params["field"])
+        elif operation == "avg":
+            resultado = firebase_adapter.avg_field(params["collection"], params["field"])
+        elif operation == "distinct":
+            resultado = firebase_adapter.distinct_field(params["collection"], params["field"])
+        elif operation == "joinCollections":
+            resultado = firebase_adapter.join_collections(
+                params["collection1"], params["collection2"], params["local_field"], params["foreign_field"]
+            )
+        elif operation == "updateDocument":
+            resultado = firebase_adapter.update_document(
+                params["collection"], params["document_id"],
+                {k: v for k, v in params.items() if k not in ["collection", "document_id"]}
+            )
+        elif operation == "deleteDocument":
+            resultado = firebase_adapter.delete_document(
+                params["collection"], params["document_id"]
             )
         else:
             resultado = f"Operación NoSQL desconocida: {operation}"
