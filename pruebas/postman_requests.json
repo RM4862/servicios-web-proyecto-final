@@ -1,1 +1,340 @@
-# postman_requests.json (placeholder)
+//postman_requests.json (placeholder)
+//Esqueletos de peticiones 
+
+//ADMINISTRADOR:
+
+//1.Prueba para crear base de datos SQL (Admin)
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>createDatabase</operation><parameters><name>prueba_admin</name></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+
+//2.Prueba para crear tabla SQL (Admin)
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>createTable</operation><parameters><dbName>prueba_admin</dbName><tableName>personas</tableName><col1_name>nombre</col1_name><col1_type>VARCHAR(50)</col1_type><col2_name>edad</col2_name><col2_type>INT</col2_type></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//3.Prueba para insertar registro SQL (Admin)
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>insertRecord</operation><parameters><dbName>prueba_admin</dbName><tableName>personas</tableName><nombre>Juan</nombre><edad>30</edad></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//4.Listar bases de datos SQL (Admin)
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>listDatabases</operation><parameters/></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//5.Insertar documento NoSQL (Admin)
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>NoSQL</interface><operation>insertDocument</operation><parameters><collection>clientes</collection><nombre>Maria</nombre><edad>25</edad></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//USUARIO
+
+//6. Insertar registro SQL 
+
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN_USER"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>insertRecord</operation><parameters><dbName>prueba_admin</dbName><tableName>personas</tableName><nombre>Juan</nombre><edad>30</edad></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//7.Insertar documento en NoSQL
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN_ADMIN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>NoSQL</interface><operation>insertDocument</operation><parameters><collection>clientes</collection><nombre>Maria</nombre><edad>25</edad></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+//8.Consultar registro en SQL
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN_USER"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>selectRecords</operation><parameters><dbName>prueba_admin</dbName><tableName>personas</tableName></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//9.Insertar registro NoSQL
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN_ADMIN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>NoSQL</interface><operation>insertDocument</operation><parameters><collection>clientes</collection><nombre>Gera</nombre><edad>23</edad></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//OPERACIONES USUARIO
+
+//9. SUM SQL
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>aggregateQuery</operation><parameters><dbName>prueba_admin</dbName><tableName>personas</tableName><column>edad</column><operation>SUM</operation></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//10.COUNT SQL
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>aggregateQuery</operation><parameters><dbName>prueba_admin</dbName><tableName>personas</tableName><column>*</column><operation>COUNT</operation></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+//11.DISTINCT SQL
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>selectDistinct</operation><parameters><dbName>prueba_admin</dbName><tableName>personas</tableName><column>nombre</column></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//12. AVG SQL
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>aggregateQuery</operation><parameters><dbName>prueba_admin</dbName><tableName>personas</tableName><column>edad</column><operation>AVG</operation></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//13.SUM NoSQL
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN_ADMIN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>NoSQL</interface><operation>sum</operation><parameters><collection>clientes</collection><field>edad</field></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//14.AVG NoSQL
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN_ADMIN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>NoSQL</interface><operation>avg</operation><parameters><collection>clientes</collection><field>edad</field></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//15.DISTINTC NoSQL
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN_ADMIN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>NoSQL</interface><operation>distinct</operation><parameters><collection>clientes</collection><field>nombre</field></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//16.COUNT NoSQL
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>NoSQL</interface><operation>listAll</operation><parameters><collection>clientes</collection></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//OPERACIONES JOIN SQL [PASOS]
+//1.Crear una nueva tabla (Admin)
+//2.Insertar registros en ambas tablas (Admin)
+//3.Hacer peticion join
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>selectJoin</operation><parameters><dbName>prueba_admin</dbName><query>SELECT clientes.nombre, ordenes.producto FROM clientes JOIN ordenes ON clientes.id = ordenes.cliente_id</query></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//OPERACIONES JOIN NoSQL
+//1.Crear una colección (Admin)
+//2.Insertar registros en ambas colecciones(Admin)
+//3.Hacer peticion Joincollections
+{
+  "properties": {
+    "headers": {
+      "Authorization": "Bearer TU_ID_TOKEN"
+    }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>NoSQL</interface><operation>joinCollections</operation><parameters><collection1>clientes</collection1><collection2>ordenes</collection2><local_field>cliente_id</local_field><foreign_field>cliente_id</foreign_field></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//OPERACIONES CRUD SQL
+//Crear Tabla (Admin)
+{
+  "properties": {
+    "headers": { "Authorization": "Bearer TU_ID_TOKEN_ADMIN" }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>createTable</operation><parameters><dbName>prueba_admin</dbName><tableName>clientes</tableName><col1_name>id</col1_name><col1_type>INT PRIMARY KEY AUTO_INCREMENT</col1_type><col2_name>nombre</col2_name><col2_type>VARCHAR(50)</col2_type></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+//Insertar registro (admin o user)
+{
+  "properties": {
+    "headers": { "Authorization": "Bearer TU_ID_TOKEN_USER" }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>insertRecord</operation><parameters><dbName>prueba_admin</dbName><tableName>clientes</tableName><nombre>Juan</nombre></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//Actualizar registro (admin o user)
+{
+  "properties": {
+    "headers": { "Authorization": "Bearer TU_ID_TOKEN_USER" }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>updateRecord</operation><parameters><dbName>prueba_admin</dbName><tableName>clientes</tableName><condition>id=1</condition><nombre>Carlos</nombre></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+//Eliminar registro
+{
+  "properties": {
+    "headers": { "Authorization": "Bearer TU_ID_TOKEN_USER" }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>deleteRecord</operation><parameters><dbName>prueba_admin</dbName><tableName>clientes</tableName><condition>id=1</condition></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//OPERACIONES NOSQL CRUD
+//Insertar documento (admin o user)
+{
+  "properties": {
+    "headers": { "Authorization": "Bearer TU_ID_TOKEN_USER" }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>NoSQL</interface><operation>insertDocument</operation><parameters><collection>clientes</collection><cliente_id>1</cliente_id><nombre>Juan</nombre></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+//Leer los documentos (admin o user)
+
+{
+  "properties": {
+    "headers": { "Authorization": "Bearer TU_ID_TOKEN_USER" }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>NoSQL</interface><operation>listAll</operation><parameters><collection>clientes</collection></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//Actualizar (admin o user)
+{
+  "properties": {
+    "headers": { "Authorization": "Bearer TU_ID_TOKEN_USER" }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>NoSQL</interface><operation>updateDocument</operation><parameters><collection>clientes</collection><document_id>ID_DEL_DOCUMENTO</document_id><nombre>Carlos</nombre></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+//Eliminar (admin o user)
+{
+  "properties": {
+    "headers": { "Authorization": "Bearer TU_ID_TOKEN_USER" }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>NoSQL</interface><operation>deleteDocument</operation><parameters><collection>clientes</collection><document_id>ID_DEL_DOCUMENTO</document_id></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+//ELIMINAR BASES DE DATOS SQL ADMIN 
+{
+  "properties": {
+    "headers": { "Authorization": "Bearer TU_ID_TOKEN_ADMIN" }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>SQL</interface><operation>dropDatabase</operation><parameters><name>prueba_admin</name></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
+
+//ELIMINAR BASES DE DATOS NOSQL ADMIN
+{
+  "properties": {
+    "headers": { "Authorization": "Bearer TU_ID_TOKEN_ADMIN" }
+  },
+  "routing_key": "api.request",
+  "payload": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:db=\"http://example.com/dbService\"><soapenv:Body><db:genericDBRequest><interface>NoSQL</interface><operation>deleteDocument</operation><parameters><collection>clientes</collection><document_id>ID_DEL_DOCUMENTO</document_id></parameters></db:genericDBRequest></soapenv:Body></soapenv:Envelope>",
+  "payload_encoding": "string"
+}
