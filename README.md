@@ -41,3 +41,7 @@ El servicio contiene un flujo de validación básica implementada con la API de 
 ## OAuth con Google
 
 Sigue las instrucciones en `auth_google.py` para generar y validar tokens OAuth usando cuentas de Google.
+
+## Casos de prueba
+Los ejemplos de peticiones json que se pueden hacer al servicio se encuentran en el archivo postman_requests.json
+
